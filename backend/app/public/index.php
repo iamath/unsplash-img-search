@@ -1,14 +1,20 @@
 <?php
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use App\Controller\PhotoController;
+
 header("Access-Control-Allow-Origin: *");
 
-$method = $_GET['action'];
+function loadMethod(string $method): void
+{
+    $photoController = new PhotoController();
 
-require_once "../controller/PhotoController.php";
-
-$photoController = new PhotoController();
-if (method_exists($photoController, $method)) {
-    $photoController->$method();
-} else {
-    echo json_encode(['error' => 'method not found']);
+    if (method_exists($photoController, $method)) {
+        $photoController->$method();
+    } else {
+        echo json_encode(['error' => 'method not found']);
+    }
 }
+
+loadMethod($_GET['action']);

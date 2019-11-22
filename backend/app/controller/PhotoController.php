@@ -1,26 +1,24 @@
 <?php
 
-require_once '../model/Photo.php';
+namespace App\Controller;
+
+use App\Model\Photo;
 
 class PhotoController
 {
     public function showRandom(): void
     {
         $photoObj = new Photo();
+        $photo = $photoObj->getRandom();
 
-        echo $this->returnJson($photoObj->getRandom());
+        echo json_encode($photo);
     }
 
     public function showSearch(): void
     {
         $photoObj = new Photo();
-        $photoUrl = $photoObj->search($_GET['query']);
+        $photos = $photoObj->search($_GET['query']);
 
-        echo ($photoUrl != '404') ? $this->returnJson($photoUrl) : '404';
-    }
-
-    private function returnJson(string $photoUrl): string
-    {
-        return json_encode(['photoUrl' => $photoUrl]);
+        echo json_encode($photos);
     }
 }

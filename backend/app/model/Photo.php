@@ -1,26 +1,26 @@
 <?php
 
-require '../../vendor/autoload.php';
+namespace App\Model;
+
+use Crew\Unsplash;
+use App\Config\Config;
 
 class Photo
 {
     public function __construct()
     {
-        require_once '../config/Unsplash.php';
-        Crew\Unsplash\HttpClient::init($credentials);
+        Unsplash\HttpClient::init(Config::CREDENTIALS);
     }
 
-    public function getRandom(): string
+    public function getRandom(): array
     {
-        $photo = Crew\Unsplash\Photo::random();
-        return $photo->__get('urls')['small'];
+        $photo = Unsplash\Photo::random();
+        return $photo->toArray();
     }
 
-    public function search(string $query): string
+    public function search(string $query): array
     {
-        $photos = Crew\Unsplash\Search::photos($query);
-        $photo = $photos->getArrayObject()->toArray();
-
-        return (count($photo)) ? $photo[0]['urls']['small'] : '404';
+        $photos = Unsplash\Search::photos($query);
+        return $photos->getArrayObject()->toArray();
     }
 }
