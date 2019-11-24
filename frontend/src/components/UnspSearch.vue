@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="d-flex w-50 mx-auto">
-      <input type="text" class="form-control form-control-lg" v-model="query" />
-      <button type="submit" class="btn btn-primary btn-lg" @click="getImageUrl">
-        search
+      <input class="form-control form-control-lg" v-model="query" />
+      <button class="btn btn-primary btn-lg" @click="getImageUrl">
+        <i class="fas fa-search"></i>
       </button>
     </div>
   </div>
@@ -11,6 +11,8 @@
 
 <script>
 import axios from 'axios'
+import loading from '../assets/loading.gif'
+import notFound from '../assets/notfound.png'
 
 export default {
   data() {
@@ -22,19 +24,13 @@ export default {
     async getImageUrl() {
       if (!this.query) return
 
-      this.$emit(
-        'clicked',
-        'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif'
-      )
-
       const req = await axios.get('http://localhost:8080/?action=showSearch', {
         params: { query: this.query }
       })
 
-      if (req.data !== 404) {
-        this.$emit('clicked', req.data.photoUrl)
+      if (req.data.length === 0) {
       } else {
-        this.$emit('clicked', 'https://mycity.com/assets/images/404.png')
+        this.$emit('clicked', req.data)
       }
     }
   }

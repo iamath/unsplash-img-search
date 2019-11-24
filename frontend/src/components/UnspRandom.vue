@@ -1,21 +1,22 @@
 <template>
-  <button class="btn btn-primary btn-lg" @click="getRandomImageUrl">
+  <button
+    class="btn btn-primary btn-lg d-block mx-auto"
+    @click="getRandomImage"
+  >
     show random image
+    <i class="fas fa-random"></i>
   </button>
 </template>
 
 <script>
 import axios from 'axios'
+import loading from '../assets/loading.gif'
 
 export default {
   methods: {
-    async getRandomImageUrl() {
-      this.$emit(
-        'clicked',
-        'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif'
-      )
+    async getRandomImage() {
       const req = await axios.get('http://localhost:8080/?action=showRandom')
-      this.$emit('clicked', req.data.photoUrl)
+      this.$emit('clicked', [req.data])
     }
   }
 }

@@ -9,7 +9,9 @@
       <h1 class="mt-3 mb-3">or</h1>
       <UnspRandom @clicked="changeImage" />
       <hr />
-      <UnspImage :url="url" />
+      <div class="card-columns mb-5">
+        <UnspImage v-for="(image, i) in images" :key="i" :img="image" />
+      </div>
     </div>
   </div>
 </template>
@@ -31,12 +33,12 @@ export default {
   },
   data() {
     return {
-      url: ''
+      images: []
     }
   },
   methods: {
-    changeImage(url) {
-      this.url = url
+    changeImage(images) {
+      this.images = images
     }
   }
 }
