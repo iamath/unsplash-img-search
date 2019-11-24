@@ -10,7 +10,6 @@
 
 <script>
 import axios from 'axios'
-import loading from '../assets/loading.gif'
 
 export default {
   methods: {

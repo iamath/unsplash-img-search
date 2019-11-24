@@ -11,8 +11,6 @@
 
 <script>
 import axios from 'axios'
-import loading from '../assets/loading.gif'
-import notFound from '../assets/notfound.png'
 
 export default {
   data() {
